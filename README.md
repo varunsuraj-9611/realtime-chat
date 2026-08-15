@@ -1,10 +1,11 @@
 # Real-Time Chat Application
 
-React + Express + Socket.io + MongoDB chat app.
+A full-stack real-time chat application built with React, Express, Socket.io, and MongoDB.
 
 ## Features
+
 - JWT authentication
-- One-to-one and group-ready conversations
+- One-to-one messaging
 - Real-time messages
 - Online/offline presence
 - Typing indicator
@@ -12,21 +13,10 @@ React + Express + Socket.io + MongoDB chat app.
 - Message history
 - Responsive interface
 
-## Run
-### Server
-```bash
-cd server
-npm install
-cp .env.example .env
-npm run dev
-```
+## Tech Stack
 
-### Client
-```bash
-cd client
-npm install
-cp .env.example .env
-npm run dev
-```
-
-The app uses Socket.io for live events. Messages are persisted in MongoDB.
+- React.js
+- Node.js
+- Express.js
+- Socket.io
+- MongoDB
