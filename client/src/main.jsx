@@ -9,7 +9,7 @@ async function api(p,o={}){const r=await fetch(API+p,{...o,headers:{"Content-Typ
 
 function App(){
  const [user,setUser]=useState(()=>JSON.parse(localStorage.user||"null")),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[name,setName]=useState("");
- const [users,setUsers]=useState([]),[convs,setConvs]=useState([]),[active,setActive]=useState(null),[messages,setMessages]=useState([]),[text,setText]=useState(""),[typing,setTyping]=useState(false),socket=useRef(null);
+  const [users,setUsers]=useState([]),[convs,setConvs]=useState([]),[search,setSearch]=useState(""),[active,setActive]=useState(null),[messages,setMessages]=useState([]),[text,setText]=useState(""),[typing,setTyping]=useState(false),socket=useRef(null);
  useEffect(()=>{if(convs.length&&!active){setActive(convs[0]);socket.current?.emit("join",convs[0]._id);api("/messages/"+convs[0]._id).then(setMessages)}},[convs,active]);
  useEffect(()=>{if(!user)return;api("/users").then(setUsers);api("/conversations").then(setConvs);socket.current=io(SOCKET,{auth:{token:localStorage.token}});socket.current.on("message",m=>setMessages(x=>[...x,m]));socket.current.on("typing",d=>setTyping(d.typing));socket.current.on("presence",p=>setUsers(x=>x.map(u=>u._id===p.userId?{...u,online:p.online}:u)));return()=>socket.current?.disconnect()},[user]);
  async function login(e){e.preventDefault();try{const d=await api("/auth/login",{method:"POST",body:JSON.stringify({email,password})});localStorage.token=d.token;localStorage.user=JSON.stringify(d.user);setUser(d.user)}catch(e){alert(e.message)}}
@@ -20,7 +20,13 @@ function App(){
  const other=active?.members?.find(m=>String(m._id)!==String(user.id));
  return <div className="app"><aside><h2>ChatFlow</h2>
 
-<div className="profile-card">
+<div className="search-box">
+  <input
+    placeholder="Search users..."
+    value={search}
+    onChange={e => setSearch(e.target.value)}
+  />
+</div><div className="profile-card">
   <div className="avatar">
     {user.name?.charAt(0).toUpperCase()}
   </div>
@@ -40,6 +46,6 @@ function App(){
   >
     Logout
   </button>
-</div>{users.map(u=><button className="user" onClick={()=>openChat(u)} key={u._id}><span className={u.online?"dot online":"dot"}></span>{u.name}</button>)}</aside><section className="chat">{active?<><header><b>{active.isGroup?active.name:other?.name}</b><small>{other?.online?"Online":"Offline"}</small></header><div className="messages">{messages.map(m=><div className={String(m.sender._id)===String(user.id)?"bubble me":"bubble"} key={m._id}><b>{m.sender.name}</b><div>{m.text}</div><small>{new Date(m.createdAt).toLocaleTimeString()}</small></div>)}{typing&&<i>Typing…</i>}</div><form className="composer" onSubmit={send}><input value={text} onChange={e=>{setText(e.target.value);socket.current.emit("typing",{conversationId:active._id,typing:true})}} placeholder="Type a message…"/><button>Send</button></form></>:<div className="empty">Select a person to start chatting.</div>}</section></div>
+</div>{users.filter(u=>u.name.toLowerCase().includes(search.toLowerCase())).map(u=><button className="user" onClick={()=>openChat(u)} key={u._id}><span className={u.online?"dot online":"dot"}></span>{u.name}</button>)}</aside><section className="chat">{active?<><header><b>{active.isGroup?active.name:other?.name}</b><small>{other?.online?"Online":"Offline"}</small></header><div className="messages">{messages.map(m=><div className={String(m.sender._id)===String(user.id)?"bubble me":"bubble"} key={m._id}><b>{m.sender.name}</b><div>{m.text}</div><small>{new Date(m.createdAt).toLocaleTimeString()}</small></div>)}{typing&&<i>Typing…</i>}</div><form className="composer" onSubmit={send}><input value={text} onChange={e=>{setText(e.target.value);socket.current.emit("typing",{conversationId:active._id,typing:true})}} placeholder="Type a message…"/><button>Send</button></form></>:<div className="empty">Select a person to start chatting.</div>}</section></div>
 }
 createRoot(document.getElementById("root")).render(<App/>);
