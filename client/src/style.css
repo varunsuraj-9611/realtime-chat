@@ -4,8 +4,9 @@
 
 body {
   margin: 0;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #f5f7fb;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f4f7fb;
+  color: #172033;
 }
 
 button,
@@ -13,73 +14,125 @@ input {
   font: inherit;
 }
 
-/* LOGIN */
 .auth {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
   background: linear-gradient(135deg, #eef2ff, #f8fafc);
 }
 
 .auth form {
-  width: min(420px, 92vw);
-  padding: 36px;
-  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  padding: 35px;
+  border-radius: 22px;
   background: white;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
 }
 
 .auth h1 {
-  margin: 0 0 28px;
+  margin: 0 0 25px;
   text-align: center;
-  font-size: 32px;
+  color: #4f46e5;
 }
 
 .auth input {
   width: 100%;
-  margin-bottom: 14px;
   padding: 13px 15px;
-  border: 1px solid #dfe3eb;
-  border-radius: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #d9dee8;
+  border-radius: 11px;
   outline: none;
+  background: #f8fafc;
 }
 
 .auth input:focus {
   border-color: #6366f1;
+  background: white;
 }
 
 .auth button {
   width: 100%;
-  margin-top: 8px;
   padding: 13px;
+  margin-top: 8px;
   border: 0;
-  border-radius: 10px;
+  border-radius: 11px;
   cursor: pointer;
-  background: #6366f1;
-  color: white;
   font-weight: 600;
+  background: #4f46e5;
+  color: white;
 }
 
-/* MAIN APP */
+.auth button:hover {
+  background: #4338ca;
+}
+
+.auth button[type="button"] {
+  background: #eef2ff;
+  color: #4338ca;
+}
+
 .app {
   height: 100vh;
   display: flex;
   overflow: hidden;
-  background: white;
+  background: #f8fafc;
 }
 
-/* SIDEBAR */
 .app aside {
-  width: 300px;
-  padding: 22px;
-  border-right: 1px solid #e8eaf0;
-  background: #fafbff;
+  width: 310px;
+  padding: 22px 16px;
+  background: #111827;
+  color: white;
   overflow-y: auto;
 }
 
 .app aside h2 {
-  margin: 0 0 20px;
+  margin: 5px 10px 22px;
   font-size: 25px;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #4f46e5;
+  font-weight: 700;
+}
+
+.profile-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.profile-info small {
+  color: #4ade80;
+}
+
+.logout-btn {
+  border: 0;
+  padding: 7px 9px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ddd;
 }
 
 .user {
@@ -87,78 +140,75 @@ input {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 13px;
-  margin-bottom: 6px;
+  padding: 12px;
+  margin-bottom: 5px;
   border: 0;
-  border-radius: 10px;
-  background: transparent;
+  border-radius: 11px;
   cursor: pointer;
   text-align: left;
+  background: transparent;
+  color: #e5e7eb;
 }
 
 .user:hover {
-  background: #eef2ff;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .dot {
   width: 9px;
   height: 9px;
-  flex-shrink: 0;
   border-radius: 50%;
-  background: #cbd5e1;
+  background: #6b7280;
 }
 
 .dot.online {
   background: #22c55e;
 }
 
-/* CHAT */
 .chat {
   flex: 1;
-  min-width: 0;
-  height: 100vh;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .chat header {
-  flex-shrink: 0;
-  padding: 20px 26px;
-  border-bottom: 1px solid #e8eaf0;
+  padding: 18px 25px;
+  border-bottom: 1px solid #e5e7eb;
   background: white;
 }
 
 .chat header b {
   display: block;
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .chat header small {
   color: #22c55e;
 }
 
-/* MESSAGES */
 .messages {
   flex: 1;
-  min-height: 0;
-  padding: 24px;
   overflow-y: auto;
-  background: #f8fafc;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
 }
 
 .bubble {
-  width: fit-content;
   max-width: 70%;
-  margin-bottom: 12px;
+  align-self: flex-start;
   padding: 11px 14px;
-  border-radius: 14px;
+  border-radius: 15px 15px 15px 4px;
   background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
 }
 
 .bubble.me {
-  margin-left: auto;
-  background: #6366f1;
+  align-self: flex-end;
+  border-radius: 15px 15px 4px 15px;
+  background: #4f46e5;
   color: white;
 }
 
@@ -166,59 +216,56 @@ input {
   display: block;
   margin-bottom: 4px;
   font-size: 12px;
+  opacity: 0.7;
 }
 
 .bubble small {
   display: block;
   margin-top: 5px;
-  opacity: 0.65;
   font-size: 10px;
+  opacity: 0.6;
 }
 
-/* MESSAGE INPUT */
 .composer {
-  flex-shrink: 0;
   display: flex;
   gap: 10px;
-  padding: 16px;
-  border-top: 1px solid #e8eaf0;
+  padding: 16px 22px;
+  border-top: 1px solid #e5e7eb;
   background: white;
 }
 
 .composer input {
   flex: 1;
-  min-width: 0;
-  padding: 13px 15px;
-  border: 1px solid #dfe3eb;
-  border-radius: 12px;
+  padding: 13px 16px;
+  border: 1px solid #d9dee8;
+  border-radius: 13px;
   outline: none;
-  background: white;
+  background: #f8fafc;
 }
 
 .composer input:focus {
   border-color: #6366f1;
+  background: white;
 }
 
 .composer button {
   padding: 0 22px;
   border: 0;
-  border-radius: 12px;
-  background: #6366f1;
-  color: white;
+  border-radius: 13px;
   cursor: pointer;
   font-weight: 600;
+  background: #4f46e5;
+  color: white;
 }
 
-/* EMPTY CHAT */
 .empty {
   flex: 1;
-  display: grid;
-  place-items: center;
-  color: #94a3b8;
-  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
 }
 
-/* MOBILE */
 @media (max-width: 700px) {
   .app aside {
     width: 220px;
@@ -226,5 +273,13 @@ input {
 
   .bubble {
     max-width: 85%;
+  }
+
+  .messages {
+    padding: 16px;
+  }
+
+  .composer {
+    padding: 12px;
   }
 }
